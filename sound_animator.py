@@ -1,5 +1,6 @@
 from matplotlib import animation
 from ipywidgets import HTML
+import IPython.display as ipd
 import random
 from tempfile import NamedTemporaryFile
 import math
