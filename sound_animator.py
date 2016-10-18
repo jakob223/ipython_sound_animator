@@ -1,10 +1,9 @@
 from matplotlib import animation
-from IPython.html import widgets
-from IPython.display import display
 from ipywidgets import HTML
 import random
 from tempfile import NamedTemporaryFile
 import math
+import matplotlib.pyplot as plt
 VIDEO_TAG = """<video controls id="video_{1}">
  <source src="data:video/x-m4v;base64,{0}" type="video/mp4">
  Your browser does not support the video tag.
