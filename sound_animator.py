@@ -16,7 +16,7 @@ AUDIO_TAG = """
             </audio>
           """
 CONTROLS_TAG = """
-    <input type="button" value="PlaySoundAndVideo" onClick='PlaySoundAndVideo("video_%s"),PlaySoundAndVideo("audio_%s")'>
+    <input type="button" value="Play sound with moving bar" onClick='PlaySoundAndVideo("video_%s"),PlaySoundAndVideo("audio_%s")'>
     <script>
     function PlaySoundAndVideo(soundObj,videoObj) {
     var soundAndVideo=document.getElementById(soundObj,videoObj);
