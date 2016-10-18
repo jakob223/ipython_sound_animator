@@ -26,7 +26,6 @@ CONTROLS_TAG = """
 """
 def new_html(audio,uniq_id):
     return AUDIO_TAG.format(ident="audio_"+uniq_id,src=audio.src_attr(),type=audio.mimetype, autoplay=audio.autoplay_attr())
-audio = ipd.Audio(snd1,rate=22050)
 # HTML(new_html(audio))
 def anim_to_html(anim,fps,uniq_id):
     if not hasattr(anim, '_encoded_video'):
@@ -54,7 +53,7 @@ def display_animation_with_sound(anim,fps,snd,rate):
         "<br><br>" +\
         controls(uniq_id))
 
-def animate_sound(snd, rate, fps=20,plot=None):
+def animate_sound(snd, rate, fps=13,plot=None):
     """
         Animates a bar moving accross the plot of the sound (or of plot, if given), while playing the music.
         snd: the sound to play
@@ -65,7 +64,7 @@ def animate_sound(snd, rate, fps=20,plot=None):
     if plot is None:
         plot = snd
     fig = plt.figure()
-    ax = plt.axes(xlim=(0, len(snd1)), ylim=(-.5, .5))
+    ax = plt.axes(xlim=(0, len(snd)), ylim=(-.5, .5))
     line, = ax.plot([], [], lw=2)
     plt.plot(snd)
     def init():
@@ -81,4 +80,4 @@ def animate_sound(snd, rate, fps=20,plot=None):
     anim = animation.FuncAnimation(fig, animate, init_func=init, frames=int(math.ceil(len(snd)*1./rate*fps)), interval=1000/fps, blit=False)
 
 
-    return display_animation_with_sound(anim,fps,snd1,rate)
+    return display_animation_with_sound(anim,fps,snd,rate)
