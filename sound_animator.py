@@ -10,18 +10,18 @@ VIDEO_TAG = """<video controls id="video_{1}">
  Your browser does not support the video tag.
 </video>"""
 AUDIO_TAG = """
-            <audio controls="controls" id="{ident}" {autoplay}>
+            <audio id="{ident}" {autoplay}>
                 <source src="{src}" type="{type}" />
                 Your browser does not support the audio element.
             </audio>
           """
 CONTROLS_TAG = """
-    <input type="button" value="Play sound with moving bar" onClick='PlaySoundAndVideo("video_%s"),PlaySoundAndVideo("audio_%s")'>
     <script>
-    function PlaySoundAndVideo(soundObj,videoObj) {
-    var soundAndVideo=document.getElementById(soundObj,videoObj);
-    soundAndVideo.play();
-    }
+    var myaudio=document.getElementById("audio_%s");
+    var myvideo=document.getElementById("video_%s");
+myvideo.onplay  = function() { myaudio.currentTime = myvideo.currentTime;myaudio.play();  }
+myvideo.onpause = function() { myaudio.pause(); }
+
     </script>
 """
 def new_html(audio,uniq_id):
@@ -53,7 +53,7 @@ def display_animation_with_sound(anim,fps,snd,rate):
         "<br><br>" +\
         controls(uniq_id))
 
-def animate_sound(snd, rate, fps=13,plot=None):
+def animate_sound(snd, rate, fps=13,plot=None,color='r'):
     """
         Animates a bar moving accross the plot of the sound (or of plot, if given), while playing the music.
         snd: the sound to play
@@ -64,16 +64,16 @@ def animate_sound(snd, rate, fps=13,plot=None):
     if plot is None:
         plot = snd
     fig = plt.figure()
-    ax = plt.axes(xlim=(0, len(snd)), ylim=(-.5, .5))
-    line, = ax.plot([], [], lw=2)
-    plt.plot(snd)
+    ax = plt.axes(xlim=(0, len(plot)), ylim=(-.5, .5))
+    line, = ax.plot([], [], color, lw=2)
+    plt.plot(plot)
     def init():
         line.set_data([], [])
         return line,
     
     # animation function.  This is called sequentially
     def animate(i):
-        x = (i*rate*1./fps,i*rate*1./fps)
+        x = (i*rate*1.*len(plot)/len(snd)/fps,i*len(plot)*rate*1./fps/len(snd))
         y = (-1,1)
         line.set_data(x, y)
         return line,
